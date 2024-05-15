@@ -1442,27 +1442,29 @@ a.slide_banner {
      text-align: center;
 }
 .top-banner-slider .flex_caption2 {
-     position: absolute;
-     z-index: 30;
-     left: 0;
-     top: 20%;
-     display: table;
-     width: 177px;
-     height: 177px;
-     background-color: #242424;
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  top: 20%;
+  display: table;
+  width: 250px; /* Increase the width */
+  height: 177px;
+  background-color: #242424;
 }
+
 .top-banner-slider .flex_caption2 .middle {
-     display: table-cell;
-     vertical-align: middle;
-     text-transform: uppercase;
-     text-align: center;
-     font-weight: 700;
-     line-height: 31px;
-     font-size: 26px;
-     color: #fff;
-     transition: all 0.1s ease-in-out;
-     -webkit-transition: all 0.1s ease-in-out;
+  display: table-cell;
+  vertical-align: middle;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 700;
+  line-height: 31px;
+  font-size: 26px;
+  color: #fff;
+  transition: all 0.1s ease-in-out;
+  -webkit-transition: all 0.1s ease-in-out;
 }
+
 .top-banner-slider .flex_caption2 .middle:hover {
      background: #38c8a8;
 }

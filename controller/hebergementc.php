@@ -1,6 +1,5 @@
 <?php
 require '../../config.php';
-
 class hebergementc {
   public function listHebergement() {
     $sql = "SELECT * FROM hebergement";

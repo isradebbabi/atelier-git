@@ -17,6 +17,49 @@ class reservationc {
     }
   }
 
+  public function showReservationDetails($reservation) {
+    $hebergementc = new hebergementc();
+    $hebergement = $hebergementc->showHebergement($reservation['id_heb']);
+
+    $formatted_details = ''; // Initialize the variable
+    
+    $formatted_details .= "<div class='details'>";
+    $formatted_details .= "<h3>Hebergement Details:</h3>";
+    $formatted_details .= "<label>Type:</label>";
+    $formatted_details .= "<p>{$hebergement['type']}</p>";
+    $formatted_details .= "<label>Description:</label>";
+    $formatted_details .= "<p>{$hebergement['description']}</p>";
+    $formatted_details .= "<label>Localisation:</label>";
+    $formatted_details .= "<p>{$hebergement['localisation']}</p>";
+    $formatted_details .= "<label>Categorie:</label>";
+    $formatted_details .= "<p>{$hebergement['categorie']}</p>";
+    $formatted_details .= "<label>Service:</label>";
+    $formatted_details .= "<p>{$hebergement['service']}</p>";
+    $formatted_details .= "</div>";
+
+    $formatted_details .= "<div class='details'>";
+    $formatted_details .= "<h3>Reservation Details:</h3>";
+    $formatted_details .= "<label>User ID:</label>";
+    $formatted_details .= "<p>{$reservation['id_user']}</p>";
+    $formatted_details .= "<label>Hebergement ID:</label>";
+    $formatted_details .= "<p>{$reservation['id_heb']}</p>";
+    $formatted_details .= "<label>Voyage ID:</label>";
+    $formatted_details .= "<p>{$reservation['id_voy']}</p>";
+    $formatted_details .= "<label>Reservation Date:</label>";
+    $formatted_details .= "<p>{$reservation['date_res']}</p>";
+    $formatted_details .= "<label>Participation:</label>";
+    $formatted_details .= "<p>{$reservation['participation']}</p>";
+    $formatted_details .= "<label>Prix Total:</label>";
+    $formatted_details .= "<p>{$reservation['prix']}</p>";
+    $formatted_details .= "<label>Status:</label>";
+    $formatted_details .= "<p>{$reservation['statu']}</p>";
+    $formatted_details .= "<label>Payment Method:</label>";
+    $formatted_details .= "<p>{$reservation['pay_meth']}</p>";
+    $formatted_details .= "</div>";
+
+    return $formatted_details;
+}
+
 
   public function Search($searchQuery)
 {
@@ -67,6 +110,7 @@ public function getStatistics()
         throw new Exception('Error getting statistics: ' . $e->getMessage());
     }
 }
+
 
 
 function afficherpage($page_first_result,$results_per_page)
@@ -138,37 +182,41 @@ echo 'Error: ' . $e->getMessage();
 };
   }
     
-  function updateReservation($reservation, $id_res) {
-    $db = config::getConnexion();
+  public function updateReservation($reservation, $id_res)
+{
+    $db = Config::getConnexion();
     try {
-      $db = Config::getConnexion();
-      $query = $db->prepare(
-        "UPDATE reservation
-          SET
-           date_res = :date_res,
-           participation = :participation,
-            prix = :prix,
-            statu= :statu, 
-            pay_meth= :pay_meth
-            WHERE `id_res` = :id_res"
-      );
+        $query = $db->prepare(
+            "UPDATE reservation
+             SET
+              id_user = :id_user,
+              id_heb = :id_heb,
+              id_voy = :id_voy,
+              date_res = :date_res,
+              participation = :participation,
+              prix = :prix,
+              statu = :statu,
+              pay_meth = :pay_meth
+             WHERE id_res = :id_res"
+        );
 
-      $query->execute([
-        'id_res' => $id_res,
-        ':id_user' => $reservation->getIdUser(),
-        ':id_heb' => $reservation->getIdHeb(),
-        ':id_voy' => $reservation->getIdVoy(),
-        ':date_res' => $reservation->getDateReserv(),
-        ':participation' => $reservation->getNbParticipation(),
-        ':prix' => $reservation->getPrixTot(),
-        'statu' => $reservation->getStatus(),
-        'pay_meth' => $reservation->getPayMethode(),
-      ]);
-      echo $query->rowCount() . " records UPDATED successfully <br>";
+        $query->execute([
+            ':id_user' => $reservation->getIdUser(),
+            ':id_heb' => $reservation->getIdHeb(),
+            ':id_voy' => $reservation->getIdVoy(),
+            ':date_res' => $reservation->getDateReserv(),
+            ':participation' => $reservation->getNbParticipation(),
+            ':prix' => $reservation->getPrixTot(),
+            ':statu' => $reservation->getStatus(),
+            ':pay_meth' => $reservation->getPayMethode(),
+            ':id_res' => $id_res
+        ]);
+
+        return $query->rowCount(); // Return the number of rows affected
     } catch (PDOException $e) {
-      echo $e->getMessage();
+        throw $e;
     }
-  }
+}
 
   function deleteReservation($id) {
     $sql = "DELETE FROM reservation WHERE `id_res` = :id";
@@ -183,6 +231,7 @@ echo 'Error: ' . $e->getMessage();
     }
   }
 }
+
 
   
 

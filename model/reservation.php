@@ -7,20 +7,20 @@ class reservation {
   private ?int $id_voy = null;
   private ?string $date_res = null;
   private ?int $participation	 = null;
-  private ?int $prix = null;
+  private ?string $prix = null;
   private ?string $statu = null;
   private ?string $pay_meth = null;
 
   public function __construct(
-    $id_res,
-    $id_user,
-    $id_heb,
-    $id_voy,
-    $date_res,
-    $participation,
-    $prix,
-    $statu,
-    $pay_meth
+    ?int $id_res,
+    ?int $id_user,
+    ?int $id_heb,
+    ?int $id_voy,
+    ?string $date_res,
+    ?int $participation,
+    ?string $prix,
+    ?string $statu,
+    ?string $pay_meth
   ) {
     $this->id_res = $id_res;
     $this->id_user = $id_user;
